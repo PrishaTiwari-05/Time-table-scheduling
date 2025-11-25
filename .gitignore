@@ -1,0 +1,38 @@
+# Maven
+TimetableSystemJava/target/
+TimetableSystemJava/.mvn/
+TimetableSystemJava/mvnw
+TimetableSystemJava/mvnw.cmd
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.settings/
+.project
+.classpath
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Application specific
+application-local.properties
+

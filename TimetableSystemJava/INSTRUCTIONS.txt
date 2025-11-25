@@ -1,0 +1,157 @@
+================================================================================
+     SMART TIMETABLE & CLASSROOM ALLOTMENT SYSTEM
+     Advanced Algorithm Project
+================================================================================
+
+ALGORITHMS IMPLEMENTED:
+-----------------------
+1. AVL Tree - Time-based scheduling with conflict detection
+2. Trie - Auto-completion for courses and rooms
+3. Greedy Algorithm - Optimal classroom allocation
+
+
+HOW TO RUN:
+-----------
+
+Option 1: Using Maven Wrapper (Recommended)
+--------------------------------------------
+Windows:
+  .\mvnw.cmd spring-boot:run
+
+Linux/Mac:
+  ./mvnw spring-boot:run
+
+
+Option 2: Using Maven (if installed)
+-------------------------------------
+  mvn spring-boot:run
+
+
+Option 3: Build and Run JAR
+----------------------------
+  mvn clean package
+  java -jar target/timetable-system-1.0.0.jar
+
+
+ACCESSING THE APPLICATION:
+--------------------------
+Once running, open your browser and go to:
+  http://localhost:8082
+
+
+FEATURES:
+---------
+1. Smart Scheduling
+   - Auto-allocates best room using Greedy Algorithm
+   - Detects conflicts using AVL Tree
+   - Real-time availability checking
+
+2. Auto-Complete Search
+   - Type course codes (CS, MATH) to see suggestions
+   - Type room numbers (LAB, 101) for instant search
+   - Powered by Trie data structure
+
+3. Schedule Management
+   - View schedule sorted by day (AVL Tree)
+   - Filter by specific days
+   - See room utilization percentage
+
+
+TESTING THE SYSTEM:
+-------------------
+
+1. Schedule a Class:
+   - Select a course
+   - Select a professor
+   - Select a time slot
+   - System will automatically:
+     * Show available rooms (Greedy)
+     * Allocate best room (Greedy)
+     * Check for conflicts (AVL Tree)
+     * Display utilization percentage
+
+2. Try Auto-Complete:
+   - Type "CS" in course search
+   - See all CS courses appear instantly (Trie)
+   - Type "LAB" in room search
+   - See all lab rooms appear (Trie)
+
+3. View Schedule:
+   - Click day filters to see schedule by day
+   - Notice entries are sorted by time (AVL Tree)
+   - Try scheduling conflicting classes to see conflict detection
+
+
+SAMPLE DATA:
+------------
+Pre-loaded data includes:
+- 5 Courses (CS501, CS502, CS503, MATH301, CS504)
+- 4 Professors
+- 6 Rooms (different capacities)
+- 9 Time Slots across the week
+
+
+TROUBLESHOOTING:
+----------------
+If port 8082 is already in use:
+  Edit src/main/resources/application.properties
+  Change: server.port=8082 to server.port=8083 (or any free port)
+
+If build fails:
+  Make sure you have Java 21 installed
+  Run: java -version
+
+
+PROJECT STRUCTURE:
+------------------
+algorithm/
+  - AVLTree.java          (Conflict detection, sorted scheduling)
+  - Trie.java             (Auto-completion)
+  - GreedyRoomAllocator.java (Optimal room allocation)
+
+service/
+  - SchedulingService.java (Main service integrating all algorithms)
+
+controller/
+  - TimetableController.java (REST API endpoints)
+
+model/
+  - Course, Room, Professor, TimeSlot, TimetableEntry
+
+
+API ENDPOINTS:
+--------------
+POST /api/schedule - Schedule a class (uses all 3 algorithms)
+GET  /api/autocomplete/course?prefix=CS - Course auto-complete (Trie)
+GET  /api/autocomplete/room?prefix=LAB - Room auto-complete (Trie)
+GET  /api/rooms/available?timeSlotId=T1 - Available rooms (Greedy)
+GET  /api/schedule/day?day=Monday - Schedule by day (AVL Tree)
+GET  /api/schedule/all - All schedules sorted (AVL Tree)
+
+
+ALGORITHM COMPLEXITY:
+---------------------
+AVL Tree:
+  - Insert: O(log n)
+  - Search: O(log n)
+  - Delete: O(log n)
+
+Trie:
+  - Insert: O(m) where m = word length
+  - Search: O(m)
+  - Auto-complete: O(m + k) where k = number of results
+
+Greedy Room Allocator:
+  - Room allocation: O(n log n) where n = number of rooms
+  - Availability check: O(m) where m = scheduled entries
+
+
+TEAM:
+-----
+Tiya Sadhwani
+Prisha Tiwari
+
+Mentor: Prof. Nimesh Bumb
+
+================================================================================
+

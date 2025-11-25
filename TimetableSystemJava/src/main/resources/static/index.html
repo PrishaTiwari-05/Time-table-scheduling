@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Timetable System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Smart Timetable & Classroom Allotment System</h1>
+            <p>Using AVL Tree, Trie & Greedy Algorithm</p>
+        </header>
+
+        <div class="algorithm-info">
+            <div class="algo-card">
+                <h3>🌲 AVL Tree</h3>
+                <p>Conflict Detection & Sorted Scheduling</p>
+            </div>
+            <div class="algo-card">
+                <h3>🔍 Trie</h3>
+                <p>Auto-Complete Course & Room Search</p>
+            </div>
+            <div class="algo-card">
+                <h3>⚡ Greedy</h3>
+                <p>Optimal Room Allocation</p>
+            </div>
+        </div>
+
+        <!-- Smart Scheduling Section -->
+        <div class="schedule-section">
+            <h2>📅 Schedule a Class</h2>
+            <form id="scheduleForm">
+                <div class="form-group">
+                    <label>Course (Trie auto-complete):</label>
+                    <input type="text" id="courseSearch" placeholder="Type CS, MATH..." autocomplete="off">
+                    <div id="courseSuggestions" class="suggestions"></div>
+                    <select id="courseSelect" required>
+                        <option value="">Select Course</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Professor:</label>
+                    <select id="professorSelect" required>
+                        <option value="">Select Professor</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Time Slot:</label>
+                    <select id="timeSlotSelect" required>
+                        <option value="">Select Time Slot</option>
+                    </select>
+                </div>
+
+                <div id="availableRooms" class="available-rooms"></div>
+
+                <button type="submit" class="btn btn-success">🚀 Schedule Class (Auto-Allocate Room)</button>
+            </form>
+
+            <div id="scheduleResult" class="result-box"></div>
+        </div>
+
+        <!-- Current Schedule Display -->
+        <div class="schedule-display">
+            <h2>📋 Current Schedule (Sorted by AVL Tree)</h2>
+            <div class="day-filter">
+                <button onclick="loadScheduleByDay('all')" class="filter-btn">All Days</button>
+                <button onclick="loadScheduleByDay('Monday')" class="filter-btn">Monday</button>
+                <button onclick="loadScheduleByDay('Tuesday')" class="filter-btn">Tuesday</button>
+                <button onclick="loadScheduleByDay('Wednesday')" class="filter-btn">Wednesday</button>
+                <button onclick="loadScheduleByDay('Thursday')" class="filter-btn">Thursday</button>
+                <button onclick="loadScheduleByDay('Friday')" class="filter-btn">Friday</button>
+            </div>
+            <div id="scheduleList" class="schedule-list"></div>
+        </div>
+
+        <!-- Room Search with Trie -->
+        <div class="search-section">
+            <h2>🔍 Search Rooms (Trie Auto-Complete)</h2>
+            <input type="text" id="roomSearch" placeholder="Type LAB, 101, Engineering..." autocomplete="off">
+            <div id="roomSuggestions" class="suggestions"></div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
