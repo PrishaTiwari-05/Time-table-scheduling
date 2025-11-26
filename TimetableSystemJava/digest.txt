@@ -1,0 +1,311 @@
+================================================================================
+                    SMART TIMETABLE & CLASSROOM ALLOTMENT SYSTEM
+                         Project Digest & Documentation
+================================================================================
+
+PROJECT OVERVIEW:
+-----------------
+This is a Java Spring Boot web application for intelligent university timetable
+scheduling and classroom allocation. The system uses three advanced algorithms
+to optimize scheduling, detect conflicts, and provide auto-completion features.
+
+TECHNOLOGY STACK:
+-----------------
+- Backend: Java 21, Spring Boot 3.1.5
+- Build Tool: Maven 3.9+
+- Frontend: HTML5, CSS3, JavaScript (Vanilla)
+- Architecture: RESTful API, MVC Pattern
+- Server Port: 8082
+
+ALGORITHMS IMPLEMENTED:
+-----------------------
+1. AVL TREE (AVLTree.java)
+   - Purpose: Time-based scheduling with conflict detection
+   - Features:
+     * Maintains sorted schedule by time
+     * O(log n) insertion, search, and deletion
+     * Automatic balancing for optimal performance
+     * Conflict detection for professors and rooms
+   
+2. TRIE (Trie.java)
+   - Purpose: Auto-completion for courses and rooms
+   - Features:
+     * Fast prefix-based search
+     * O(m) search time where m = prefix length
+     * Real-time suggestions as user types
+     * Supports course codes and room numbers
+   
+3. GREEDY ALGORITHM (GreedyRoomAllocator.java)
+   - Purpose: Optimal classroom allocation
+   - Features:
+     * Selects smallest suitable room (capacity-based)
+     * O(n log n) complexity for room sorting
+     * Maximizes room utilization
+     * Prevents over-allocation
+
+CURRENT DATA CONFIGURATION:
+---------------------------
+
+PROFESSORS (7 Total):
+  - P1: Prof. Nimesh Bumb (Computer Science)
+  - P2: Prof. Sridhar Pappu (Computer Vision)
+  - P3: Dr. Patil (Emerging Technologies)
+  - P4: Prof. Pramod Bhide (Emerging Technologies Lab)
+  - P5: Prof. Naresh Kaushik (Mathematics)
+  - P6: Dr. Sarah Johnson (Cloud Computing)
+  - P7: Dr. Emily Davis (NLP)
+
+COURSES (7 Total - B.Tech Year 3):
+  - C1: CS701 - Advanced Algorithms (4 credits, 48 students)
+  - C2: CS702 - Emerging Technologies (Theory) (3 credits, 46 students)
+  - C3: CS702L - Emerging Technologies Lab (1 credit, 24 students)
+  - C4: CS703 - Numeric Optimization Techniques (3 credits, 52 students)
+  - C5: CS704 - Cloud Application Development (3 credits, 50 students)
+  - C6: CS705 - Natural Language Processing (3 credits, 45 students)
+  - C7: CS706 - Computer Vision (3 credits, 44 students)
+
+ROOMS (72 Total):
+  - Building 1: 7 floors × 10 rooms each = 70 rooms
+    * Floor 1: Rooms 101-110
+    * Floor 2: Rooms 201-210
+    * Floor 3: Rooms 301-310
+    * Floor 4: Rooms 401-410
+    * Floor 5: Rooms 501-510
+    * Floor 6: Rooms 601-610
+    * Floor 7: Rooms 701-710
+  - Labs: 101A, 101B (32 capacity each)
+  - Room Types: Lecture Hall, Seminar Room, Lab
+  - Capacity Range: 35-70 students (varies by floor and room)
+
+TIME SLOTS (7 Total):
+  - T1: Monday 09:00-10:30
+  - T2: Monday 11:00-12:30
+  - T3: Tuesday 09:00-10:30
+  - T4: Tuesday 14:00-15:30
+  - T5: Wednesday 09:00-10:30
+  - T6: Thursday 11:00-12:30
+  - T7: Friday 09:00-10:30
+
+SAMPLE SCHEDULE (7 Entries):
+  - Advanced Algorithms (Prof. Nimesh Bumb) - Monday 09:00
+  - Computer Vision (Prof. Sridhar Pappu) - Monday 11:00
+  - Emerging Technologies Theory (Dr. Patil) - Tuesday 09:00
+  - Emerging Technologies Lab (Prof. Pramod Bhide) - Tuesday 14:00
+  - Numeric Optimization (Prof. Naresh Kaushik) - Wednesday 09:00
+  - Cloud Application Development (Dr. Sarah Johnson) - Thursday 11:00
+  - Natural Language Processing (Dr. Emily Davis) - Friday 09:00
+
+PROJECT STRUCTURE:
+------------------
+TimetableSystemJava/
+├── src/main/java/com/university/timetable/
+│   ├── algorithm/
+│   │   ├── AVLTree.java              (Conflict detection & sorted scheduling)
+│   │   ├── GreedyRoomAllocator.java  (Optimal room allocation)
+│   │   └── Trie.java                 (Auto-completion search)
+│   ├── controller/
+│   │   └── TimetableController.java  (REST API endpoints)
+│   ├── model/
+│   │   ├── Course.java               (Course data model)
+│   │   ├── Professor.java            (Professor data model)
+│   │   ├── Room.java                 (Room data model)
+│   │   ├── TimeSlot.java             (Time slot data model)
+│   │   └── TimetableEntry.java       (Scheduled entry model)
+│   ├── service/
+│   │   ├── TimetableService.java     (Data management service)
+│   │   └── SchedulingService.java   (Main scheduling logic)
+│   └── TimetableApplication.java    (Spring Boot main class)
+├── src/main/resources/
+│   ├── application.properties        (Server configuration)
+│   └── static/
+│       ├── index.html                (Frontend HTML)
+│       ├── css/style.css             (Frontend styles)
+│       └── js/app.js                 (Frontend JavaScript)
+├── pom.xml                           (Maven configuration)
+├── install-maven.ps1                 (Maven installation script)
+└── INSTRUCTIONS.txt                  (Original project instructions)
+
+API ENDPOINTS:
+--------------
+GET  /api/courses                    - Get all courses
+GET  /api/professors                 - Get all professors
+GET  /api/rooms                      - Get all rooms
+GET  /api/timeslots                  - Get all time slots
+GET  /api/schedule/all               - Get all scheduled entries (sorted by AVL Tree)
+GET  /api/schedule/day?day=Monday    - Get schedule for specific day
+GET  /api/autocomplete/course?prefix=CS - Course auto-complete (Trie)
+GET  /api/autocomplete/room?prefix=101 - Room auto-complete (Trie)
+GET  /api/rooms/available?timeSlotId=T1 - Get available rooms for time slot (Greedy)
+POST /api/schedule                   - Schedule a new class (uses all 3 algorithms)
+     Request Body: {
+       "courseId": "C1",
+       "professorId": "P1",
+       "timeSlotId": "T1"
+     }
+
+HOW TO RUN:
+-----------
+
+Prerequisites:
+  - Java JDK 21 installed
+  - Maven 3.9+ installed (or use Maven Wrapper)
+  - JAVA_HOME and MAVEN_HOME environment variables set
+
+Option 1: Using Maven (if installed)
+  cd TimetableSystemJava
+  mvn spring-boot:run
+
+Option 2: Using Maven Wrapper
+  Windows: .\mvnw.cmd spring-boot:run
+  Linux/Mac: ./mvnw spring-boot:run
+
+Option 3: Build and Run JAR
+  mvn clean package
+  java -jar target/timetable-system-1.0.0.jar
+
+Access Application:
+  Open browser: http://localhost:8082
+
+FEATURES:
+---------
+1. Smart Scheduling
+   - Automatic room allocation using Greedy Algorithm
+   - Conflict detection using AVL Tree
+   - Real-time availability checking
+   - Prevents double-booking of rooms/professors
+
+2. Auto-Complete Search
+   - Type course codes (e.g., "CS") to see suggestions
+   - Type room numbers (e.g., "101") for instant search
+   - Powered by Trie data structure
+   - Fast prefix-based matching
+
+3. Schedule Management
+   - View schedule sorted by day and time (AVL Tree)
+   - Filter by specific days
+   - See room utilization percentage
+   - Display all scheduled classes in organized table
+
+4. Room Directory
+   - Browse all available rooms
+   - Filter by room type (Lecture Hall, Seminar Room, Lab)
+   - View capacity and building information
+
+ALGORITHM COMPLEXITY ANALYSIS:
+-------------------------------
+AVL Tree:
+  - Insert: O(log n)
+  - Search: O(log n)
+  - Delete: O(log n)
+  - Conflict Check: O(log n)
+  - Space: O(n)
+
+Trie:
+  - Insert: O(m) where m = word length
+  - Search: O(m)
+  - Auto-complete: O(m + k) where k = number of results
+  - Space: O(ALPHABET_SIZE × N × M) where N = number of words, M = avg length
+
+Greedy Room Allocator:
+  - Room Sorting: O(n log n) where n = number of rooms
+  - Availability Check: O(m) where m = scheduled entries
+  - Total: O(n log n + m)
+  - Space: O(n)
+
+TESTING THE SYSTEM:
+-------------------
+1. Schedule a Class:
+   - Select a course from dropdown
+   - Select a professor
+   - Select a time slot
+   - System automatically:
+     * Shows available rooms (Greedy Algorithm)
+     * Allocates best room (smallest suitable)
+     * Checks for conflicts (AVL Tree)
+     * Displays success/error message
+
+2. Try Auto-Complete:
+   - Type "CS" in course search box
+   - See all CS courses appear instantly (Trie)
+   - Type "101" in room search box
+   - See all rooms starting with 101 (Trie)
+
+3. View Schedule:
+   - Click day filter buttons to see schedule by day
+   - Notice entries are sorted by time (AVL Tree)
+   - Try scheduling conflicting classes to see conflict detection
+
+4. Room Directory:
+   - Browse all 72 rooms
+   - Filter by type (Lecture Hall, Seminar Room, Lab)
+   - Check room capacities and locations
+
+TROUBLESHOOTING:
+----------------
+Port Already in Use:
+  Edit src/main/resources/application.properties
+  Change: server.port=8082 to server.port=8083
+
+Build Fails:
+  - Verify Java 21: java -version
+  - Verify Maven: mvn -version
+  - Check JAVA_HOME and MAVEN_HOME environment variables
+
+Frontend Not Loading:
+  - Hard refresh browser: Ctrl+F5 (Windows) or Cmd+Shift+R (Mac)
+  - Clear browser cache
+  - Restart Spring Boot server
+
+Maven Not Found:
+  - Run install-maven.ps1 script (as Administrator on Windows)
+  - Or manually install Maven and set MAVEN_HOME
+
+MODIFICATIONS MADE:
+-------------------
+1. Updated Professor Data:
+   - Added 7 professors with specific names and departments
+   - Includes Prof. Nimesh Bumb, Prof. Sridhar Pappu, Dr. Patil, etc.
+
+2. Updated Course Data:
+   - Added 7 B.Tech Year 3 courses
+   - Includes Advanced Algorithms, Emerging Technologies, NLP, Computer Vision, etc.
+   - Set appropriate credits and student enrollment numbers
+
+3. Updated Room Data:
+   - Expanded to 72 rooms (7 floors × 10 rooms + 2 labs)
+   - Rooms numbered 101-110, 201-210, ..., 701-710
+   - Added labs 101A and 101B
+   - Varied capacities based on floor and room number
+
+4. Updated Sample Schedule:
+   - Created 7 sample timetable entries
+   - Mapped courses to appropriate professors
+   - Distributed across different days and time slots
+
+TEAM INFORMATION:
+----------------
+Developers:
+  - Tiya Sadhwani
+  - Prisha Tiwari
+
+Mentor:
+  - Prof. Nimesh Bumb
+
+Repository:
+  - Original: https://github.com/PrishaTiwari-05/Time-table-scheduling
+  - Cloned to: C:\Users\tiyas\SmartTimetableApp\Time-table-scheduling\TimetableSystemJava
+
+NOTES:
+------
+- The system uses in-memory data storage (no database)
+- All data is initialized on application startup
+- Changes are lost on server restart
+- For production, consider adding database persistence
+- Frontend UI maintains original layout and styling
+- All algorithms are fully integrated and functional
+
+================================================================================
+                              END OF DIGEST
+================================================================================
+
+

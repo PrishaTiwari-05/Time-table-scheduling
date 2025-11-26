@@ -4,7 +4,7 @@ Write-Host "  Apache Maven Installation Script" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
-$mavenZip = "C:\Users\Dinisha\Downloads\apache-maven-3.9.11-bin.zip"
+$mavenZip = "C:\Users\tiyas\Downloads\apache-maven-3.9.11-bin.zip"
 $installDir = "C:\Program Files\Apache\Maven"
 $tempExtractDir = "$env:TEMP\maven-extract"
 

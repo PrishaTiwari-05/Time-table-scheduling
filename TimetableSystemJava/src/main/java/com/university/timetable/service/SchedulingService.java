@@ -47,26 +47,37 @@ public class SchedulingService {
     }
     
     private void initializeSampleData() {
-        // Sample Rooms
-        allRooms.add(new Room("R1", "101", "Engineering Block", 30, "Lecture Hall"));
-        allRooms.add(new Room("R2", "102", "Engineering Block", 50, "Lecture Hall"));
-        allRooms.add(new Room("R3", "103", "Engineering Block", 80, "Lecture Hall"));
-        allRooms.add(new Room("R4", "LAB1", "CS Block", 40, "Lab"));
-        allRooms.add(new Room("R5", "LAB2", "CS Block", 40, "Lab"));
-        allRooms.add(new Room("R6", "201", "Science Building", 60, "Lecture Hall"));
+        // Rooms – Building 1 floors 1-7 with 10 rooms each
+        final String building = "Building 1";
+        int roomCounter = 1;
+        for (int floor = 1; floor <= 7; floor++) {
+            for (int room = 1; room <= 10; room++) {
+                String number = floor + String.format("%02d", room);
+                int capacity = 35 + (floor * 3) + ((room % 4) * 5);
+                String type = (room % 3 == 0) ? "Seminar Room" : "Lecture Hall";
+                allRooms.add(new Room("R" + roomCounter++, number, building, capacity, type));
+            }
+        }
+        allRooms.add(new Room("R" + roomCounter++, "101A", building, 32, "Lab"));
+        allRooms.add(new Room("R" + roomCounter++, "101B", building, 32, "Lab"));
         
-        // Sample Courses
-        allCourses.add(new Course("C1", "CS501", "Advanced Algorithms", 4, "Computer Science", 45));
-        allCourses.add(new Course("C2", "CS502", "Database Systems", 3, "Computer Science", 50));
-        allCourses.add(new Course("C3", "CS503", "Machine Learning", 4, "Computer Science", 40));
-        allCourses.add(new Course("C4", "MATH301", "Linear Algebra", 3, "Mathematics", 60));
-        allCourses.add(new Course("C5", "CS504", "Operating Systems", 4, "Computer Science", 35));
+        // Courses – B.Tech Year 3 subjects
+        allCourses.add(new Course("C1", "CS701", "Advanced Algorithms", 4, "Computer Science", 48));
+        allCourses.add(new Course("C2", "CS702", "Emerging Technologies (Theory)", 3, "Computer Science", 46));
+        allCourses.add(new Course("C3", "CS702L", "Emerging Technologies Lab", 1, "Computer Science", 24));
+        allCourses.add(new Course("C4", "CS703", "Numeric Optimization Techniques", 3, "Computer Science", 52));
+        allCourses.add(new Course("C5", "CS704", "Cloud Application Development", 3, "Computer Science", 50));
+        allCourses.add(new Course("C6", "CS705", "Natural Language Processing", 3, "Computer Science", 45));
+        allCourses.add(new Course("C7", "CS706", "Computer Vision", 3, "Computer Science", 44));
         
-        // Sample Professors
-        allProfessors.add(new Professor("P1", "Dr. Smith", "Computer Science", "smith@university.edu"));
-        allProfessors.add(new Professor("P2", "Dr. Johnson", "Computer Science", "johnson@university.edu"));
-        allProfessors.add(new Professor("P3", "Dr. Williams", "Mathematics", "williams@university.edu"));
-        allProfessors.add(new Professor("P4", "Dr. Brown", "Computer Science", "brown@university.edu"));
+        // Professors
+        allProfessors.add(new Professor("P1", "Prof. Nimesh Bumb", "Computer Science", "nimesh.bumb@university.edu"));
+        allProfessors.add(new Professor("P2", "Prof. Sridhar Pappu", "Computer Vision", "sridhar.pappu@university.edu"));
+        allProfessors.add(new Professor("P3", "Dr. Patil", "Emerging Technologies", "patil@university.edu"));
+        allProfessors.add(new Professor("P4", "Prof. Pramod Bhide", "Emerging Technologies Lab", "pramod.bhide@university.edu"));
+        allProfessors.add(new Professor("P5", "Prof. Naresh Kaushik", "Mathematics", "naresh.kaushik@university.edu"));
+        allProfessors.add(new Professor("P6", "Dr. Sarah Johnson", "Cloud Computing", "sarah.johnson@university.edu"));
+        allProfessors.add(new Professor("P7", "Dr. Emily Davis", "Natural Language Processing", "emily.davis@university.edu"));
         
         // Sample Time Slots
         allTimeSlots.add(new TimeSlot("T1", "Monday", "09:00", "10:30"));
@@ -88,6 +99,19 @@ public class SchedulingService {
         for (Room room : allRooms) {
             roomTrie.insert(room.getRoomNumber());
             roomTrie.insert(room.getBuilding());
+        }
+        
+        // Seed initial timetable entries
+        allEntries.add(new TimetableEntry("TE1", allCourses.get(0), allProfessors.get(0), allRooms.get(0), allTimeSlots.get(0)));
+        allEntries.add(new TimetableEntry("TE2", allCourses.get(6), allProfessors.get(1), allRooms.get(5), allTimeSlots.get(1)));
+        allEntries.add(new TimetableEntry("TE3", allCourses.get(1), allProfessors.get(2), allRooms.get(10), allTimeSlots.get(2)));
+        allEntries.add(new TimetableEntry("TE4", allCourses.get(2), allProfessors.get(3), allRooms.get(11), allTimeSlots.get(3)));
+        allEntries.add(new TimetableEntry("TE5", allCourses.get(3), allProfessors.get(4), allRooms.get(2), allTimeSlots.get(4)));
+        allEntries.add(new TimetableEntry("TE6", allCourses.get(4), allProfessors.get(5), allRooms.get(15), allTimeSlots.get(5)));
+        allEntries.add(new TimetableEntry("TE7", allCourses.get(5), allProfessors.get(6), allRooms.get(20), allTimeSlots.get(6)));
+        
+        for (TimetableEntry entry : allEntries) {
+            scheduleTree.insert(entry);
         }
     }
     
